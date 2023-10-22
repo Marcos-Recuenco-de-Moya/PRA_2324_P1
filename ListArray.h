@@ -78,11 +78,15 @@ class ListArray : public List<T> {
             }
           }
         }
+	max++;
+	n++;
       }
 
       void append(T e) override{
         resize(size() +1);
         arr[max-1] = e;
+	max++;
+	n++;
       }
 
       void prepend(T e) override{
@@ -94,6 +98,8 @@ class ListArray : public List<T> {
             arr[i]=arr[i-1];
           }
         }
+	max++;
+	n++;
       }
 
 
@@ -109,6 +115,8 @@ class ListArray : public List<T> {
              arr[i]=arr[i+1];
           }
 	}
+	max--;
+	n--;
         return aux;
       }
     }
