@@ -22,7 +22,7 @@ class ListArray : public List<T> {
         for(int i=0 ; i < max ; i++){
           new_arr[i] = arr[i];
         }
-        delete arr;
+        delete[] arr;
         arr = new_arr;
         max = new_size;
       }
@@ -38,7 +38,7 @@ class ListArray : public List<T> {
 
 
       ~ListArray(){
-        delete arr;
+        delete[] arr;
       }
 
 
@@ -61,7 +61,7 @@ class ListArray : public List<T> {
       //miembros heredados de List<T>
 
       int size() override{
-        return max;
+        return n;
       }
 
       void insert(int pos, T e) override{
@@ -70,7 +70,7 @@ class ListArray : public List<T> {
         }else{
 
           resize(size() +1);
-          for(int i=max ; i>=pos ; i--){
+          for(int i=max-1 ; i>=pos ; i--){
             if(i==pos){
               arr[i]=e;
             }else{
@@ -82,12 +82,12 @@ class ListArray : public List<T> {
 
       void append(T e) override{
         resize(size() +1);
-        arr[max] = e;
+        arr[max-1] = e;
       }
 
       void prepend(T e) override{
         resize(size() +1);
-        for(int i=max ; i >= 0 ; i--){
+        for(int i=max-1 ; i >= 0 ; i--){
           if(i==0){
             arr[i]=e;
           }else{
@@ -102,9 +102,13 @@ class ListArray : public List<T> {
         throw out_of_range("Posición no válida");
       }else{
         int aux = arr[pos];
-        for(int i=pos ; i<max ; i++){
-          arr[i]=arr[i+1];
-        }
+        for(int i=pos ; i<=max-1 ; i++){
+          if(pos==max){
+		resize(size()-1);
+	  }else{
+             arr[i]=arr[i+1];
+          }
+	}
         return aux;
       }
     }
@@ -125,16 +129,17 @@ class ListArray : public List<T> {
           return i;
         }
       }
+      cout << "No se ha encontrado el elemento en el array" << endl;
       return -1;
     }
 
 
     bool empty() override{
       if(n==0){
-        cout << "La lista esta vacía";
+        cout << "La lista esta vacía" << endl;
         return true;
       }else{
-        cout << "La lista no esta vacía";
+        cout << "La lista no esta vacía" << endl;;
         return false;
       }
     }
