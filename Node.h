@@ -12,6 +12,11 @@ class Node {
 
         //METODOS
 
+      Node(T data){
+	      this->data=data;
+	      next = nullptr;
+      }
+
       Node(T data, Node* next){
         this->data = data;
         this->next = next;
