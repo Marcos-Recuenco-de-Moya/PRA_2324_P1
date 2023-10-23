@@ -52,7 +52,11 @@ class ListArray : public List<T> {
 
 
       friend ostream& operator<<(ostream &out, const ListArray<T> &list){
-        out << list.arr;
+	      cout << "List => [";
+	      for(int i=0 ; i<list.n ; i++){
+		      out<< list.arr[i] << " ";
+	      }
+	      cout << "]" << endl;
         return out;
       }
 
