@@ -86,7 +86,7 @@ class ListLinked : public List<T> {
 	    }else if(pos==n-1){
 	        append(e);
 	    }else{
-		    cout << "No funciona el insert" << endl;
+		    
                 Node<T>* aux = first;
           	Node<T>* prevAux = nullptr;
 
