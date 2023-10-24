@@ -48,6 +48,7 @@ class ListLinked : public List<T> {
 	      Node<T>* aux = list.first;
 		cout << "List => [";
 	      for(int i=0 ; i<list.n ; i++){
+		      cout << " ";
 		out << aux->data;
 		aux = aux->next;
 	      }
@@ -58,6 +59,24 @@ class ListLinked : public List<T> {
 
       //miembros heredados de List<T>
 
+	void prepend(T e) override{
+                Node<T>* aux = new Node<T>(e, first);
+                first = aux;
+                n++;
+        }
+
+
+        void append(T e) override{
+                Node<T>* aux = first;
+
+                for(int i=1; i<n ; i++){
+                        aux = aux->next;
+                }
+                aux->next = new Node<T>(e, nullptr);
+                n++;
+        }
+
+
       void insert(int pos, T e) override{
         if(pos<0 || pos>n){
           throw out_of_range("Posición no válida");
@@ -67,51 +86,20 @@ class ListLinked : public List<T> {
 	    }else if(pos==n-1){
 	        append(e);
 	    }else{
+		    cout << "No funciona el insert" << endl;
                 Node<T>* aux = first;
           	Node<T>* prevAux = nullptr;
-		Node<T>* nuevo;		
 
-          	for(int i=1 ; i<pos ; i++){
+          	for(int i=0 ; i<pos ; i++){
             	prevAux = aux;
             	aux = aux->next;
           	}
 
-          	prevAux->next = nuevo;
-          	nuevo->next = aux;
-          	nuevo->data = e;
+          	prevAux->next = new Node<T>(e, aux);
           	n++;
-          	delete prevAux;
-          	delete aux;
 	    }
         }
       }
-
-
-	void prepend(T e) override{
-		Node<T>* aux = first;
-		Node<T>* nuevo;
-
-		first = nuevo;
-		nuevo->data = e;
-		nuevo->next = aux;
-		delete aux;
-		n++;
-	}
-
-
-	void append(T e) override{
-		Node<T>* aux = first;
-		Node<T>* nuevo;
-
-		for(int i=1; i<n ; i++){
-			aux = aux->next;
-		}
-		aux->next = nuevo;
-		nuevo->data = e;
-		nuevo->next = nullptr;
-		n++;
-		delete aux;
-	}
 
 
 
@@ -151,7 +139,7 @@ class ListLinked : public List<T> {
 
 	T get(int pos) override{
 
-		if(pos<0 || pos>n){
+		if(pos<0 || pos>n-1){
           		throw out_of_range("Posición no válida");
         	}else{
 			Node<T>* aux = first;
@@ -165,18 +153,28 @@ class ListLinked : public List<T> {
 
 
 	T remove(int pos) override{
-		Node<T>* aux = first;
-		Node<T>* prevAux = nullptr;
 
-		for(int i=0 ; i<pos ; i++){
-			prevAux = aux;
-			aux = aux->next;
+		if(pos<0 || pos>n-1){
+                        throw out_of_range("Posición no válida");
+                }else{
+
+			Node<T>* aux = first;
+			if(pos==0){
+				first=first->next;
+			}else{
+			Node<T>* prevAux = nullptr;
+
+			for(int i=0 ; i<pos ; i++){
+				prevAux = aux;
+				aux = aux->next;
+			}
+			prevAux->next = aux->next;
+			}
+			n--;
+			T elemento=aux->data;
+			delete aux;
+			return elemento;
 		}
-		prevAux->next = aux->next;
-		return aux->data;
-		delete aux;
-		delete prevAux;
-		n--;
 	}
 
 
