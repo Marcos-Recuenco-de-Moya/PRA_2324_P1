@@ -108,7 +108,7 @@ class ListArray : public List<T> {
 
 
     T remove(int pos) override{
-      if(pos<0 || pos>size()){
+      if(pos<0 || pos>size()-1){
         throw out_of_range("Posición no válida");
       }else{
         int aux = arr[pos];
@@ -127,7 +127,7 @@ class ListArray : public List<T> {
 
 
     T get(int pos) override{
-      if(pos<0 || pos>size()){
+      if(pos<0 || pos>size()-1){
         throw out_of_range("Posición no válida");
       }else{
         return arr[pos];
